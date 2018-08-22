@@ -1,0 +1,123 @@
+*** bsim3v3 model cards
+.model n1 nmos 
++level    = 49  paramchk=1                
+*
+* general parameters
+*
++lmin     = 1.3e-7              lmax     = 2.0e-5              wmin     = 1.5e-7              
++wmax     = 1.0e-4              tnom     = 25.0                version  = 3.3                 
++tox      = 2.58e-09 toxm     = 2.58e-09            xj       = 1.7800000e-07       
++nch      = 2.0000000e+17       lln      = 1.0100255           lwn      = 0.9879730            
++wln      = 0.8380182           wwn      = 0.9000000           lint     = 2.2500000e-08       
++ll       = -5.5039860e-16      lw       = 9.0694950e-17       lwl      = -4.9007390e-22      
++wint     = -1.2500000e-08      wl       = -6.5090980e-15      ww       = -8.6992990e-15      
++wwl      = -4.8173890e-20      mobmod   = mobmod              binunit  = binunit         
++xl       = 0.00      xw       = 0.00      dwg      = -3.50000000e-08      
++dwb      = -1.5669281e-08      stimod   = 0 gidlmod=gidlmod   tempmod=tempmod
+* diode parameters
++acm      = acm                  ldif     = 6.50e-08            hdif     = 1.25e-07           
++rsh      = 6.45                rd       = 0                   rs       = 0                   
++rsc      = 1.35                rdc      = 1.35                calcacm  = 1                   
+*
+* threshold voltage parameters
+*
++vth0     = 0.31000  lvth0    = -8.0000000e-11      
++pvth0    = 4.0000000e-15       
++k1       = 0.4800000           lk1      = -1.8420666e-09      wk1      = -1.0000000e-08      
++pk1      = 1.4789672e-15       k2       = -5.0000000e-03      
++k3       = -10.0000000         
++dvt0     = 0.00                ldvt0    = 1.1694450e-07       dvt1     = 1.0000000           
++ldvt1    = -3.5000000e-09      dvt2     = 0.8949000           ldvt2    = -7.1451010e-08      
++dvt0w    = 0.6500000           dvt1w    = 9.8000000e+05       dvt2w    = -0.2599000          
++nlx      = 9.6464000e-08       w0       = 0.00                lnlx     = -1.2000000e-16
++k3b      = 0.5000000           ngate    = 2.4999999e+21       
+*
+* mobility parameters
+*
++vsat     = 6.9000000e+04       lvsat    = 6.8000000e-04       
++pvsat    = -6.9000000e-10      
++ua       = -1.4209612e-09      wua      = 1.7999999e-16       pua      = -9.2832830e-24      
++ub       = 1.6785000e-18       uc       = 8.6392650e-11       puc      = -2.7496502e-24      
++rdsw     = 40.3000000          prwb     = -0.8927537          prwg     = 0.5000000           
++wr       = 0.9500000           pwr      = 2.3000001e-14      
++u0       = 2.2346960e-02       
++lu0      = -8.5934490e-12      wu0      = -9.6841870e-10      
++pu0      = -7.4697010e-18      
++a0       = 1.2500000           pa0      = -2.7990815e-13      keta     = 5.0000000e-03       
++lketa    = 2.5000000e-09       wketa    = 1.0000000e-09       pketa    = 6.2000000e-15       
++a1       = 0.00                a2       = 0.9900000           ags      = 0.4099000           
++pags     = 4.1380000e-13       b0       = 3.4518250e-07       b1       = 3.0000001e-07       
+*
+* subthreshold current parameters
+*
++voff     = -0.1400000          lvoff    = -2.1794540e-09      nfactor  = 0.7000000           
++lnfactor = 1.8000000e-07       pnfactor = -4.0000000e-15      cit      = 7.0000000e-04       
++cdsc     = 0.00                cdscb    = 0.00                cdscd    = 0.00                
++eta0     = 2.5000000e-02       leta0    = 2.8000000e-09       peta0    = 2.9999999e-15       
++etab     = -3.7000000e-02      petab    = -4.0000000e-15      dsub     = 0.5600000           
++pdsub    = 1.0000000e-14       
+**
+** rout parameters
+**
++pclm     = 1.0000000           lpclm    = 4.0000000e-08       ppclm    = 5.0000000e-15       
++pdiblc1  = 1.7999999e-02       ppdiblc1 = 7.0000000e-16       pdiblc2  = 6.0000000e-03       
++pdiblcb  = 1.0000000e-02       drout    = 0.5600000           pscbe1   = 3.5000000e+08       
++pscbe2   = 1.0000000e-06       pvag     = 0.00                delta    = 5.0000000e-03       
++alpha0   = 2.1e-008            alpha1  = 0.28                 beta0   = 11.25  
++lalpha0  = 1.564e-015        
+*
+* gidl parameters
++agidl   = 6.234e-011      bgidl   = 56480000     cgidl   = 113.91        
++egidl   = 0.005625
+*
+* gate current parameters
++igcmod  = igcmod               igbmod  = igbmod
++aigbacc = 0.0136        
++bigbacc = 0.00171         cigbacc = 0.075           nigbacc = 1             
++aigbinv = 0.0111          bigbinv = 0.000949        cigbinv = 0.006         
++eigbinv = 1.1             nigbinv = 3               aigc    = 0.010962      
++bigc    = 0.00171         cigc    = 0.075           nigc    = 1             
++pigcd   = 1               aigsd   = 0.011015        bigsd   = 0.0011799     
++cigsd   = 0.075           poxedge = 1               ntox    = 1             
+*
+* noise parameters
+*
++noimod  = 2                    noia    = 9.3101e+019          noib    = 7.5446e+4       
++noic    = -1.1719e-013         em      = 1.3865e+007          ef      = 0.9116
+*
+* temperature effects parameters
+*
++kt1      = -0.2182000          wkt1     = 1.9663267e-09       kt2      = -4.0960000e-02      
++at       = 4.0000000e+04       pat      = -1.1500000e-09      ute      = -1.4000000          
++lute     = 2.7304393e-08       wute     = 8.7153190e-11       pute     = 1.1268293e-17       
++ua1      = 1.3860000e-09       lua1     = 5.0009860e-19       pua1     = -1.0761545e-23      
++ub1      = -1.2850000e-18      uc1      = -9.3847000e-11      luc1     = 1.5000001e-17       
++puc1     = 1.6646051e-26       kt1l     = 1.0000000e-10       prt      = 0.00                
+*
+* capacitance parameters
+*
++cj       = 0.001315     mj       = 0.458                pb       = 0.791                   
++cjsw     = 1.04e-10   mjsw     = 0.593                pbsw     = 0.955                 
++cjswg    = 4.87e-10  mjswg    = 0.472                pbswg    = 0.915
++tpb      = 1.12e-3                tpbsw    = 9.24e-4              tpbswg   = 1.59e-3
++tcj      = 7.59e-4                tcjsw    = 5.85e-4              tcjswg   = 6.68e-4
++js       = 1.06e-06               jsw      = 1.5e-10              nj       = 1.083 
++xti      = 3.0                    nqsmod   = 0                    elm      = 5
++cgdo     = 3.60e-10   cgso     = 3.60e-10 tlevc    = 1            
++capmod   = capmod                     xpart    = 1                    cf       = 0.00
++acde     = 0.500                  moin     = 24.00                noff     = 1.9843
++voffcv   = -0.03770               cgbo     = 0
++llc      = 0                      lwc      = 0                    lwlc     = 0
++wlc      = 0                      wwc      = 0                    wwlc     = 0
++dlc      = 1.75e-8		   dwc      = -7.5e-09 
+*
+* stress parameters 
+*
++sa0     = 2.25e-006       sb0     = 2.25e-006       wlod    = 0             
++kvth0   = 1.2e-008        lkvth0  = 1.7e-007        wkvth0  = 3.4e-007      
++pkvth0  = 0               llodvth = 1               wlodvth = 1             
++stk2    = 0               lodk2   = 1               lodeta0 = 1             
++ku0     = -1.1e-007       lku0    = 1.16e-006       wku0    = 0             
++pku0    = 0               llodku0 = 1               wlodku0 = 1             
++kvsat   = -0.42           steta0  = -2.4e-008       tku0    = 0  
+*

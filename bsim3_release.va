@@ -1094,11 +1094,11 @@ module bsim3_va(d, g, s, b);
     integer BSIM3lvfbsdoffGiven,BSIM3wvfbsdoffGiven,BSIM3pvfbsdoffGiven,BSIM3tvfbsdoffGiven,BSIM3ltvfbsdoffGiven;
     real BSIM3wtvfbsdoff,BSIM3ptvfbsdoff,BSIM3poxedge,BSIM3lpoxedge,BSIM3wpoxedge;
     integer BSIM3wtvfbsdoffGiven,BSIM3ptvfbsdoffGiven,BSIM3poxedgeGiven,BSIM3lpoxedgeGiven,BSIM3wpoxedgeGiven;
-    real BSIM3aigs,BSIM3waigs,BSIM3laigs,BSIM3paigs,BSIM3bigs;
+    real BSIM3waigs,BSIM3laigs,BSIM3paigs,BSIM3bigs;
     integer BSIM3aigsGiven,BSIM3waigsGiven,BSIM3laigsGiven,BSIM3paigsGiven,BSIM3bigsGiven;
     real BSIM3wbigs,BSIM3lbigs,BSIM3pbigs,BSIM3cigs,BSIM3wcigs;
     integer BSIM3wbigsGiven,BSIM3lbigsGiven,BSIM3pbigsGiven,BSIM3cigsGiven,BSIM3wcigsGiven;
-    real BSIM3lcigs,BSIM3pcigs,BSIM3aigd,BSIM3waigd,BSIM3laigd;
+    real BSIM3lcigs,BSIM3pcigs,BSIM3waigd,BSIM3laigd;
     integer BSIM3lcigsGiven,BSIM3pcigsGiven,BSIM3aigdGiven,BSIM3waigdGiven,BSIM3laigdGiven;
     real BSIM3paigd,BSIM3bigd,BSIM3wbigd,BSIM3lbigd,BSIM3pbigd;
     integer BSIM3paigdGiven,BSIM3bigdGiven,BSIM3wbigdGiven,BSIM3lbigdGiven,BSIM3pbigdGiven;
@@ -1138,7 +1138,7 @@ module bsim3_va(d, g, s, b);
     integer BSIM3calcacm, BSIM3acm;
     //New model stimod
     integer BSIM3stiMod,LOD_flag,BSIM3ku0temp;
-    real BSIM3sa, BSIM3sa1, BSIM3sb, BSIM3sb1,BSIM3sw1;
+    real BSIM3sa, BSIM3sb;
     real BSIM3mulu0,BSIM3mulua,BSIM3mulub,BSIM3sa0,BSIM3sb0;
     real BSIM3wlod,BSIM3ku0,BSIM3kvsat,BSIM3kvth0,BSIM3tku0,here_BSIM3kvth0;
     integer BSIM3wlodGiven,BSIM3ku0Given,BSIM3kvsatGiven,BSIM3kvth0Given,BSIM3tku0Given;
@@ -2770,22 +2770,22 @@ module bsim3_va(d, g, s, b);
 
           rseff = rs;
           rdeff = rd;            
-          if (wrs != 0. || lrs != 0. || prs != 0. || wrd != 0. 
-      	    || lrd != 0. || prd != 0.) begin
+          if (wrs != 0.0 || lrs != 0.0 || prs != 0.0 || wrd != 0.0 
+      	    || lrd != 0.0 || prd != 0.0) begin
       	   larg = lref * lmlt + xlref - (ld + del) * 2.0;
       	   warg = wref * wmlt + xwref - wd * 2.0;
-      	   if (lref > 0.) 
-      	       T0 = 1. / (larg * 1e6);
+      	   if (lref > 0.0) 
+      	       T0 = 1.0 / (larg * 1e6);
       	   else 
-      	       T0 = 0.;
+      	       T0 = 0.0;
       	   
-      	   if (wref > 0.) 
-      	       T1 = 1. / (warg * 1e6);
+      	   if (wref > 0.0) 
+      	       T1 = 1.0 / (warg * 1e6);
       	   else 
-      	       T1 = 0.;
+      	       T1 = 0.0;
       	   
-      	   T2 = 1. / (Leff * 1e6) - T0;
-      	   T3 = 1. / (here_w * 1e6) - T1;
+      	   T2 = 1.0 / (Leff * 1e6) - T0;
+      	   T3 = 1.0 / (here_w * 1e6) - T1;
       	   T4 = T2 * T3;
       	   rseff = rs + wrs * T3 + lrs * T2 + prs * T4;
       	   rdeff = rd + wrd * T3 + lrd * T2 + prd * T4;
@@ -3024,16 +3024,15 @@ module bsim3_va(d, g, s, b);
             $strobe("\nFatal: Effective channel length-CV %g <= 0",BSIM3leffCV);
         if(BSIM3weffCV <= 0.0)
             $strobe("\nFatal: Effective channel width-CV %g <= 0",BSIM3weffCV);
-        if(BSIM3acm < 3.1 || (BSIM3calcacm > 0 && (BSIM3acm < 12.1 && BSIM3acm > 11.9))) 
+        if(!(BSIM3acm < 3.1 || (BSIM3calcacm > 0 && (BSIM3acm < 12.1 && BSIM3acm > 11.9)))) 
         //use the previous calculated values from ACM
-          ; 
-        else begin
+         begin
         //use the orignal values from instance line
           BSIM3sourceArea = as ;
           BSIM3drainArea = ad ;
           BSIM3sourcePerimeter = ps ;
           BSIM3drainPerimeter = pd ;
-        end
+         end
 
         if(BSIM3sourceArea < 0.0)
             BSIM3sourceArea = 0.0;
@@ -3673,7 +3672,7 @@ module bsim3_va(d, g, s, b);
                                    * BSIM3jctSidewallTempSatCurDensity;
           /* BSIM3XExpBV -> BSIM3XExpBVD */
           `DioIjthVjmEval(Nvtm, BSIM3ijth, BSIM3DrainSatCurrent,
-            		  BSIM3XExpBVD, BSIM3vjdmFwd);
+            		  BSIM3XExpBVD, BSIM3vjdmFwd)
           T0 = exp(BSIM3vjdmFwd / Nvtm);
           BSIM3IVjdmFwd = BSIM3DrainSatCurrent * (T0 - BSIM3XExpBVD / T0
             		  + BSIM3XExpBVD - 1.0);
@@ -3716,7 +3715,7 @@ module bsim3_va(d, g, s, b);
 
           /* BSIM3XExpBV -> BSIM3XExpBVS */
           `DioIjthVjmEval(Nvtm, BSIM3ijth, BSIM3SourceSatCurrent,
-            		  BSIM3XExpBVS, BSIM3vjsmFwd);
+            		  BSIM3XExpBVS, BSIM3vjsmFwd)
           T0 = exp(BSIM3vjsmFwd / Nvtm);
           BSIM3IVjsmFwd = BSIM3SourceSatCurrent * (T0 - BSIM3XExpBVS / T0
                                + BSIM3XExpBVS - 1.0);
@@ -4417,7 +4416,7 @@ module bsim3_va(d, g, s, b);
         if (!BSIM3npeakGiven && BSIM3gamma1Given) begin
             T0 = BSIM3gamma1 * BSIM3cox;
             BSIM3npeak = 3.021E22 * T0 * T0;
-            $strobe("\nWARNING: npeak not given, gamma1 given: npeak=%g", \
+            $strobe("\nWARNING: npeak not given, gamma1 given: npeak=%g", 
                      BSIM3npeak);
         end 
 
@@ -4960,8 +4959,8 @@ module bsim3_va(d, g, s, b);
          else
              BSIM3vfbsd = 0.0;
           BSIM3ToxRatio = exp(BSIM3ntox * ln(BSIM3toxref / BSIM3toxe)) / BSIM3toxe / BSIM3toxe;
-          BSIM3ToxRatioEdge = exp(BSIM3ntox * ln(BSIM3toxref / (BSIM3toxe * BSIM3poxedge))) \
-                                    / BSIM3toxe / BSIM3toxe \
+          BSIM3ToxRatioEdge = exp(BSIM3ntox * ln(BSIM3toxref / (BSIM3toxe * BSIM3poxedge))) 
+                                    / BSIM3toxe / BSIM3toxe 
                                     / BSIM3poxedge / BSIM3poxedge;		     
           BSIM3Aechvb = (BSIM3type == `NMOS) ? 4.97232e-7 : 3.42537e-7;
           BSIM3Bechvb = (BSIM3type == `NMOS) ? 7.45669e11 : 1.16645e12;

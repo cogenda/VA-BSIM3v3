@@ -3674,8 +3674,7 @@ module bsim3_va(d, g, s, b);
                                    + BSIM3drainPerimeter
                                    * BSIM3jctSidewallTempSatCurDensity;
           /* BSIM3XExpBV -> BSIM3XExpBVD */
-          `DioIjthVjmEval(Nvtm, BSIM3ijth, BSIM3DrainSatCurrent,
-            		  BSIM3XExpBVD, BSIM3vjdmFwd)
+          `DioIjthVjmEval(Nvtm, BSIM3ijth, BSIM3DrainSatCurrent, BSIM3XExpBVD, BSIM3vjdmFwd)
           T0 = exp(BSIM3vjdmFwd / Nvtm);
           BSIM3IVjdmFwd = BSIM3DrainSatCurrent * (T0 - BSIM3XExpBVD / T0
             		  + BSIM3XExpBVD - 1.0);
@@ -3848,8 +3847,7 @@ module bsim3_va(d, g, s, b);
             $strobe("Warning: Pscbe2 = %g is not positive.\n", BSIM3pscbe2);
         end
 
-      if (BSIM3unitLengthSidewallJctCap > 0.0 || 
-            BSIM3unitLengthGateSidewallJctCap > 0.0)
+      if (BSIM3unitLengthSidewallJctCap > 0.0 || BSIM3unitLengthGateSidewallJctCap > 0.0)
       begin
 	if (BSIM3drainPerimeter < BSIM3weff)
             $strobe("\nWarning: Pd = %g is less than Weff=%g.",BSIM3drainPerimeter,BSIM3weff);
@@ -4594,7 +4592,7 @@ module bsim3_va(d, g, s, b);
           BSIM3inv_od_ref = Inv_saref + Inv_sbref;
           BSIM3rho_ref = BSIM3ku0 / BSIM3ku0temp * BSIM3inv_od_ref;
           if(verbose==1) begin
-              $strobe("STI:Inv_saref,Inv_sbref,Ldrn,BSIM3inv_od_ref=",Inv_saref,Inv_sbref,Ldrn,BSIM3inv_od_ref);
+              $strobe("STI:Inv_saref,Inv_sbref,Ldrn,BSIM3inv_od_ref=%e,%e,%e,%e\n",Inv_saref,Inv_sbref,Ldrn,BSIM3inv_od_ref);
           end
 
           T0 = BSIM3leffCV * BSIM3leffCV;
@@ -4866,9 +4864,9 @@ module bsim3_va(d, g, s, b);
             /* end of BSIM430 STI/LOD model */
 
         if(BSIM3stiMod>0 && verbose == 1) begin
-           $debug("STI:dvth0_lod,dk2_lod,deta0_lod=", dvth0_lod,dk2_lod,deta0_lod);
-           $debug("STI:BSIM3u0temp,BSIM3vsattemp=", BSIM3u0temp,BSIM3vsattemp);
-           $debug("STI:BSIM3kvth0,here_BSIM3kvth0,OD_offset=",BSIM3kvth0,here_BSIM3kvth0,OD_offset);
+           $strobe("STI:dvth0_lod,dk2_lod,deta0_lod=%e,%e,%e\n", dvth0_lod,dk2_lod,deta0_lod);
+           $strobe("STI:BSIM3u0temp,BSIM3vsattemp=%e,%e\n", BSIM3u0temp,BSIM3vsattemp);
+           $strobe("STI:BSIM3kvth0,here_BSIM3kvth0,OD_offset=%e,%e\n",BSIM3kvth0,here_BSIM3kvth0,OD_offset);
         end
 
         // process source/drain series resistance. 
@@ -4879,8 +4877,8 @@ module bsim3_va(d, g, s, b);
         if (BSIM3sourceResistance <= 0.0)
           BSIM3sourceResistance = 0;
         if(verbose == 1) begin
-           $debug("rdpr,rspr, rdc, rsc,rsh=", rdpr,rspr, rdc, rsc,rsh);
-           $debug("nrd,nrs=", BSIM3drainSquares,BSIM3sourceSquares);
+           $strobe("rdpr,rspr, rdc, rsc,rsh=%e,%e,%e,%e,%e\n", rdpr,rspr, rdc, rsc,rsh);
+           $strobe("nrd,nrs=%e,%e\n", BSIM3drainSquares,BSIM3sourceSquares);
         end
         
         //if(BSIM3acm > 9) begin
@@ -4972,8 +4970,8 @@ module bsim3_va(d, g, s, b);
           BSIM3Aechvb = BSIM3Aechvb * BSIM3weff * BSIM3leff * BSIM3ToxRatio;
           BSIM3Bechvb = -BSIM3Bechvb * BSIM3toxe;
           if(verbose == 1) begin
-             $debug("BSIM3Aechvb=", BSIM3Aechvb,BSIM3ToxRatio,BSIM3toxref,BSIM3toxe);
-             $debug("BSIM3AechvbEdge=", BSIM3AechvbEdge,BSIM3dlcig,BSIM3Lint,BSIM3ToxRatioEdge);
+             $strobe("BSIM3Aechvb=%e,%e,%e,%e\n", BSIM3Aechvb,BSIM3ToxRatio,BSIM3toxref,BSIM3toxe);
+             $strobe("BSIM3AechvbEdge=%e,%e,%e,%e\n", BSIM3AechvbEdge,BSIM3dlcig,BSIM3Lint,BSIM3ToxRatioEdge);
           end
 	end
 
@@ -4983,6 +4981,8 @@ module bsim3_va(d, g, s, b);
         vbs = BSIM3type * V(b, si);
         vgs = BSIM3type * V(g, si);
 
+        if(verbose == 1) 
+          $strobe("Input vds,vbs,vgs=%e,%e,%e\n", vds,vbs,vgs);
         /* determine DC current and derivatives */
         vbd = vbs - vds;
         vgd = vgs - vds;
@@ -5863,8 +5863,8 @@ module bsim3_va(d, g, s, b);
                 /* End of New GIDL */
        end
        if(verbose == 1) begin
-          $debug("Igisl=", Igisl);
-          $debug("Igidl=", Igidl);
+          $strobe("Igisl=%e\n", Igisl);
+          $strobe("Igidl=%e\n", Igidl);
        end
 	   	/*End of Gidl*/
        
@@ -5989,7 +5989,7 @@ module bsim3_va(d, g, s, b);
                 T6 = exp(T5);
             Igs = T11 * T2 * T6;
             if(verbose == 1) 
-              $debug("Igs=", Igs,T11,  T2,  T6, BSIM3aigsd,T5, T3, T4,T12,vgs_eff);
+              $strobe("Igs=%e,%e,%e,%e,%e,%e,%e,%e,%e,%e\n", Igs,T11,  T2,  T6, BSIM3aigsd,T5, T3, T4,T12,vgs_eff);
 
             T0 = vgd - (BSIM3vfbsd + BSIM3vfbsdoff);
             vgd_eff = `BSIM3_sqrt(T0 * T0 + 1.0e-4);
@@ -6009,7 +6009,7 @@ module bsim3_va(d, g, s, b);
 
             Igd = T11 * T2 * T6;
             if(verbose == 1) 
-              $debug("Igd=", Igd,T11,  T2,  T6);
+              $strobe("Igd=%e\n", Igd,T11,  T2,  T6);
         end
         else begin //BSIM3igcMod == 0
           Igcs = 0.0;
@@ -6047,7 +6047,7 @@ module bsim3_va(d, g, s, b);
 
             Igbacc = T11 * T2 * T6;
             if(verbose == 1) 
-              $debug("Igbacc=", Igbacc);
+              $strobe("Igbacc=%e\n", Igbacc);
 
             T0 = tmp * BSIM3nigbinv;
             T1 = Voxdepinv - BSIM3eigbinv;
@@ -6078,7 +6078,7 @@ module bsim3_va(d, g, s, b);
 
             Igbinv = T11 * T2 * T6;
             if(verbose == 1) 
-              $debug("Igbinv=", Igbinv);
+              $strobe("Igbinv=%e\n", Igbinv);
 
             Igb = Igbinv + Igbacc;
 
@@ -6714,7 +6714,7 @@ module bsim3_va(d, g, s, b);
 
         if(verbose == 1) begin
           if (BSIM3sourceResistance > 0.0 || BSIM3drainResistance>0.0) 
-           $debug("BSIM3sourceResistance,BSIM3drainResistance,rsh=", BSIM3sourceResistance,BSIM3drainResistance,rsh);
+           $strobe("BSIM3sourceResistance,BSIM3drainResistance,rsh=%e,%e,%e\n", BSIM3sourceResistance,BSIM3drainResistance,rsh);
         end
         // Parasitic resistances
         if (BSIM3sourceResistance > 0.0) begin
@@ -6727,7 +6727,7 @@ module bsim3_va(d, g, s, b);
         //if (rsh > 0.0 && BSIM3drainSquares > 0.0) begin
             I(d,di) <+ V(d,di) / BSIM3drainResistance;
             if(verbose == 1) begin
-               $debug("BSIM3drainResistance=", BSIM3drainResistance);
+               $strobe("BSIM3drainResistance=%e\n", BSIM3drainResistance);
             end
         end
         else
@@ -6752,10 +6752,10 @@ module bsim3_va(d, g, s, b);
         I(g,di) <+ BSIM3type * Igcd;
         I(g,b)	<+ BSIM3type * Igb;
         if(verbose == 1) begin
-           $debug("Ids=", Ids);
-           $debug("Igs,Igd,Igb,Igcs,Igcd=", Igs,Igd,Igb,Igcs,Igcd);
-           $debug("Isub=", Ibs,Ibd);
-           $debug("Ibs,Ibd=", BSIM3cbs,BSIM3cbd);
+           $strobe("Ids=%e\n", Ids);
+           $strobe("Igs,Igd,Igb,Igcs,Igcd=%e,%e,%e,%e,%e\n", Igs,Igd,Igb,Igcs,Igcd);
+           $strobe("Isub=%e,%e\n", Ibs,Ibd);
+           $strobe("Ibs,Ibd=%e,%e\n", BSIM3cbs,BSIM3cbd);
         end
 
         // Parasitic diodes

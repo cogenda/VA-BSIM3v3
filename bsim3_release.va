@@ -153,7 +153,7 @@ module bsim3_va(d, g, s, b);
     parameter real dwg=0; // Gate-bias dependence of channel width [m/v]
     parameter real dwb=0; // Body-bias dependence of channel width
     parameter real tox=150.0e-10; // Gate oxide thickness [m]
-    parameter real toxm=tox; // Tox at which parameters were extracted [m]
+    parameter real toxm=`NOT_GIVEN; // Tox at which parameters were extracted [m]
     parameter real xt=`NOT_GIVEN; // 1.55e-7; // Doping depth [m]
     parameter real rdsw=0; // Width dependence of drain-source resistance [Ohm mm]
     parameter real prwb=0; // Body-effectcoeff for Rds
@@ -2127,6 +2127,7 @@ module bsim3_va(d, g, s, b);
             BSIM3wnigbinvGiven = (BSIM3wnigbinv == `NOT_GIVEN) ? 0 : 1;
             BSIM3pnigbinvGiven = (BSIM3pnigbinv == `NOT_GIVEN) ? 0 : 1;
             BSIM3toxeGiven = (BSIM3toxe == `NOT_GIVEN) ? 0 : 1;
+            BSIM3toxmGiven = (BSIM3toxm == `NOT_GIVEN) ? 0 : 1;
             BSIM3vtm0Given = (BSIM3vtm0 == `NOT_GIVEN) ? 0 : 1;
             BSIM3toxrefGiven = (BSIM3toxref == `NOT_GIVEN) ? 0 : 1;
             BSIM3ntoxGiven = (BSIM3ntox == `NOT_GIVEN) ? 0 : 1;
@@ -2292,6 +2293,8 @@ module bsim3_va(d, g, s, b);
             
             if(!BSIM3toxeGiven)
             	BSIM3toxe = BSIM3tox;
+            if(!BSIM3toxmGiven)
+            	BSIM3toxm = BSIM3tox;
             if(!BSIM3vtm0Given)
             	BSIM3vtm0 = 0.0;
             if(!BSIM3toxrefGiven)
